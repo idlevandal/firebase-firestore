@@ -36,9 +36,27 @@ class QuotesFuture extends ConsumerWidget {
                     trailing: Icon(Icons.delete_forever, color: Colors.red,),
                     title: Text(data[index].author),
                     subtitle: Text(data[index].quote),
-                    onTap: () {
-                      DatabaseService().deleteQuote(data[index].id!);
-                    },
+                    onTap: () => showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: const Text('Confirm Delete!'),
+                        content: const Text('Are you sure you want to delete this quote?'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, 'Cancel'),
+                            child: const Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              DatabaseService().deleteQuote(data[index].id!);
+                              context.refresh(quotesFutureProvider);
+                              Navigator.pop(context, 'OK');
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               );

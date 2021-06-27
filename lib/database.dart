@@ -28,7 +28,6 @@ class DatabaseService {
 
   Future<List<Quote>> getQuotes() async {
     final a = await quotesCollection.get();
-    await Future.delayed(Duration(seconds: 1), () => print('done waiting...'));
     return a.docs.map((e) => Quote(author: e['author'], quote: e['quote'], id: e.id)).toList();
   }
 
