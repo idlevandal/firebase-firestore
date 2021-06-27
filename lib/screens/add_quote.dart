@@ -49,6 +49,7 @@ class AddQuote extends StatelessWidget {
                       .showSnackBar(SnackBar(content: Text('Adding quote'), duration: Duration(seconds: 2),));
                   _authorController.clear();
                   _quoteController.clear();
+                  FocusScope.of(context).unfocus();
                 }
               },
               child: Text('Submit quote'),
