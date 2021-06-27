@@ -1,18 +1,11 @@
 import 'package:firebase_firestore/database.dart';
 import 'package:flutter/material.dart';
 
-class AddQuote extends StatefulWidget {
-  const AddQuote({Key? key}) : super(key: key);
-
-  @override
-  _AddQuoteState createState() => _AddQuoteState();
-}
-
-class _AddQuoteState extends State<AddQuote> {
+class AddQuote extends StatelessWidget {
 
   final _formKey = GlobalKey<FormState>();
-  TextEditingController? _authorController = TextEditingController();
-  TextEditingController? _quoteController = TextEditingController();
+  final TextEditingController _authorController = TextEditingController();
+  final TextEditingController _quoteController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -51,11 +44,11 @@ class _AddQuoteState extends State<AddQuote> {
             ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  DatabaseService().addQuote(_authorController!.value.text, _quoteController!.value.text);
+                  DatabaseService().addQuote(_authorController.value.text, _quoteController.value.text);
                   ScaffoldMessenger.of(context)
                       .showSnackBar(SnackBar(content: Text('Adding quote'), duration: Duration(seconds: 2),));
-                  _authorController?.clear();
-                  _quoteController?.clear();
+                  _authorController.clear();
+                  _quoteController.clear();
                 }
               },
               child: Text('Submit quote'),

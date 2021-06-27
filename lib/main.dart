@@ -26,7 +26,6 @@ final themeBrightnessProvider = Provider<Brightness>((ref) {
 final tabIndexProvider = StateProvider<int>((ref) {
   return 0;
 });
-
 // end Providers
 
 Future<void> main() async {
@@ -69,7 +68,7 @@ class HomePage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Title'),
+        title: Text('Quotes'),
         elevation: 0,
         actions: [
           Row(
