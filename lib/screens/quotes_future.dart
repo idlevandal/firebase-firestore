@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/quote.dart';
 
-final quotesFutureProvider = FutureProvider.autoDispose<List<Quote>>((ref) {
+final quotesFutureProvider = FutureProvider<List<Quote>>((ref) {
   return DatabaseService().getQuotes();
 });
 
