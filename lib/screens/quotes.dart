@@ -33,9 +33,29 @@ class Quotes extends ConsumerWidget {
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 10.0),
                   child: ListTile(
-                    trailing: Icon(Icons.book_outlined, color: Colors.blue,),
+                    trailing: Icon(Icons.delete_forever, color: Colors.red,),
                     title: Text(data[index].author),
                     subtitle: Text(data[index].quote),
+                    onTap: () => showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: const Text('Confirm Delete!'),
+                        content: const Text('Are you sure you want to delete this quote?'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, 'Cancel'),
+                            child: const Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              DatabaseService().deleteQuote(data[index].id!);
+                              Navigator.pop(context, 'OK');
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               );

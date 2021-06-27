@@ -14,17 +14,22 @@ class DatabaseService {
   }
 
   Future<void> addQuote(String author, String quote) async {
-    final res = await quotesCollection.add({
+    final DocumentReference res = await quotesCollection.add({
       'author': author,
       'quote': quote,
     });
-    print(res);
+    print('$res has been added.');
+  }
+
+  Future<void> deleteQuote(String id) async {
+    await quotesCollection.doc(id).delete();
+    print('Quote with id $id has been deleted.');
   }
 
   Future<List<Quote>> getQuotes() async {
     final a = await quotesCollection.get();
     await Future.delayed(Duration(seconds: 1), () => print('done waiting...'));
-    return a.docs.map((e) => Quote(author: e['author'], quote: e['quote'])).toList();
+    return a.docs.map((e) => Quote(author: e['author'], quote: e['quote'], id: e.id)).toList();
   }
 
   // get quotes stream
@@ -40,6 +45,7 @@ class DatabaseService {
         // used to be doc.data()['propertyName'];
         author: doc['author'],
         quote: doc['quote'],
+        id: doc.id,
       );
     }).toList();
   }

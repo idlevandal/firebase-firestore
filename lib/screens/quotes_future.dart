@@ -33,9 +33,12 @@ class QuotesFuture extends ConsumerWidget {
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 10.0),
                   child: ListTile(
-                    trailing: Icon(Icons.book_outlined, color: Colors.blue,),
+                    trailing: Icon(Icons.delete_forever, color: Colors.red,),
                     title: Text(data[index].author),
                     subtitle: Text(data[index].quote),
+                    onTap: () {
+                      DatabaseService().deleteQuote(data[index].id!);
+                    },
                   ),
                 ),
               );

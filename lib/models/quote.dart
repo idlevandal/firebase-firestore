@@ -1,5 +1,6 @@
 class Quote {
+  String? id;
   String quote;
   String author;
-  Quote({required this.quote, required this.author});
+  Quote({this.id, required this.quote, required this.author});
 }
