@@ -1,18 +1,27 @@
-import 'package:firebase_firestore/quotes.dart';
-import 'package:firebase_firestore/quotes_future.dart';
+import 'package:firebase_firestore/screens/quotes.dart';
+import 'package:firebase_firestore/screens/quotes_future.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import 'screens/add_quote.dart';
 
 // PROVIDERS
 final isDarkThemeProvider = StateProvider<bool>((ref) {
   return false;
 });
 
-final themeBrightnessProvider = Provider<ThemeData>((ref) {
+final themeBrightnessProvider = Provider<Brightness>((ref) {
   final isDark = ref.watch(isDarkThemeProvider).state;
-  return isDark ? ThemeData.dark() : ThemeData.light();
+  return isDark ? Brightness.dark : Brightness.light;
 });
+
+// use with : theme: watch(themeBrightnessProvider),
+// final themeBrightnessProvider = Provider<ThemeData>((ref) {
+//   final isDark = ref.watch(isDarkThemeProvider).state;
+//   return isDark ? ThemeData.dark() : ThemeData.light();
+// });
 
 final tabIndexProvider = StateProvider<int>((ref) {
   return 0;
@@ -32,7 +41,13 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, ScopedReader watch) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: watch(themeBrightnessProvider),
+      theme: ThemeData(
+        brightness: watch(themeBrightnessProvider),
+        // fontFamily: 'Georgia',
+        // textTheme: GoogleFonts.ralewayTextTheme(
+        //   // Theme.of(context).textTheme,
+        // ),
+      ),
       home: HomePage(),
     );
   }
@@ -49,6 +64,7 @@ class HomePage extends ConsumerWidget {
     List<Widget> _screens = [
       Quotes(),
       QuotesFuture(),
+      AddQuote()
     ];
 
     return Scaffold(
@@ -81,11 +97,13 @@ class HomePage extends ConsumerWidget {
           BottomNavigationBarItem(
               icon: Icon(Icons.stream),
               label: 'Stream',
-              backgroundColor: Colors.blue
           ),BottomNavigationBarItem(
               icon: Icon(Icons.watch_later_outlined),
               label: 'Future',
-              backgroundColor: Colors.blue
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add),
+            label: 'Add Quote',
           ),
         ],
         onTap: (index) {

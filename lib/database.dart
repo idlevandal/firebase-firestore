@@ -13,6 +13,14 @@ class DatabaseService {
     });
   }
 
+  Future<void> addQuote(String author, String quote) async {
+    final res = await quotesCollection.add({
+      'author': author,
+      'quote': quote,
+    });
+    print(res);
+  }
+
   Future<List<Quote>> getQuotes() async {
     final a = await quotesCollection.get();
     await Future.delayed(Duration(seconds: 1), () => print('done waiting...'));
