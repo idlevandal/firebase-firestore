@@ -84,12 +84,7 @@ class HomePage extends ConsumerWidget {
           )
         ],
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: _screens[selectedIndex],
-        ),
-      ),
+      body: _screens[selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: selectedIndex,
         items: [
